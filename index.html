@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>💔 Buat Daniel Harley</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red: #C0392B;
+  --deep-red: #7B0D1E;
+  --crimson: #FF1744;
+  --gold: #FFD700;
+  --gold2: #FFA500;
+  --dark: #0D0208;
+  --dark2: #1A0510;
+  --cream: #FFF8F0;
+  --gray: #888;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--dark);
+  min-height: 100vh;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* CUSTOM CURSOR */
+.cursor {
+  width: 20px; height: 20px;
+  background: var(--gold);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.1s ease, width 0.2s, height 0.2s;
+  mix-blend-mode: difference;
+}
+.cursor-trail {
+  width: 8px; height: 8px;
+  background: var(--crimson);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 99998;
+  transform: translate(-50%, -50%);
+  transition: left 0.15s ease, top 0.15s ease;
+  opacity: 0.7;
+}
+
+/* PARTICLE CANVAS */
+#particleCanvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* SCANLINE OVERLAY */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,0,0,0.08) 2px,
+    rgba(0,0,0,0.08) 4px
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* SCREENS */
+.screen {
+  display: none;
+  position: relative;
+  z-index: 10;
+  min-height: 100vh;
+  padding: 20px 16px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.screen.active { display: flex; }
+
+/* ===== SCREEN 1 — EPIC INTRO ===== */
+#screen1 {
+  background: radial-gradient(ellipse at 50% 0%, #3D0015 0%, var(--dark) 70%);
+}
+
+.big-title {
+  font-family: 'Bebas Neue', cursive;
+  font-size: clamp(3.5rem, 16vw, 8rem);
+  line-height: 0.9;
+  letter-spacing: 2px;
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold2) 40%, var(--crimson) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: titleGlow 2s ease-in-out infinite alternate;
+  position: relative;
+}
+@keyframes titleGlow {
+  from { filter: drop-shadow(0 0 20px rgba(255,215,0,0.4)); }
+  to   { filter: drop-shadow(0 0 40px rgba(255,23,68,0.7)); }
+}
+
+.glitch {
+  position: relative;
+  display: inline-block;
+}
+.glitch::before, .glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  font-family: 'Bebas Neue', cursive;
+  font-size: inherit;
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold2) 40%, var(--crimson) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.glitch::before {
+  animation: glitch1 3s infinite;
+  clip-path: polygon(0 20%, 100% 20%, 100% 40%, 0 40%);
+}
+.glitch::after {
+  animation: glitch2 3s infinite;
+  clip-path: polygon(0 60%, 100% 60%, 100% 80%, 0 80%);
+}
+@keyframes glitch1 {
+  0%,90%,100% { transform: translate(0); opacity: 0; }
+  92% { transform: translate(-4px, 1px); opacity: 1; -webkit-text-fill-color: var(--crimson); }
+  94% { transform: translate(4px, -1px); opacity: 1; }
+  96% { transform: translate(-2px, 0); opacity: 1; }
+}
+@keyframes glitch2 {
+  0%,88%,100% { transform: translate(0); opacity: 0; }
+  90% { transform: translate(4px, 2px); opacity: 1; -webkit-text-fill-color: var(--gold); }
+  92% { transform: translate(-4px, -2px); opacity: 1; }
+  94% { transform: translate(2px, 0); opacity: 0; }
+}
+
+.crown-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, var(--gold), var(--gold2));
+  color: var(--dark);
+  padding: 6px 20px;
+  border-radius: 4px;
+  font-family: 'Bebas Neue', cursive;
+  font-size: 1.1rem;
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+  box-shadow: 0 4px 20px rgba(255,215,0,0.4);
+  animation: badgePulse 2s infinite;
+}
+@keyframes badgePulse {
+  0%,100% { box-shadow: 0 4px 20px rgba(255,215,0,0.4); }
+  50%      { box-shadow: 0 4px 40px rgba(255,215,0,0.8), 0 0 0 4px rgba(255,215,0,0.2); }
+}
+
+.subtitle-intro {
+  color: rgba(255,255,255,0.65);
+  font-size: clamp(0.9rem, 3.5vw, 1.1rem);
+  line-height: 1.6;
+  max-width: 380px;
+  margin: 12px auto 24px;
+}
+.subtitle-intro span {
+  color: var(--gold);
+  font-weight: 700;
+}
+
+/* JOMBLO METER */
+.jomblo-meter {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,215,0,0.2);
+  border-radius: 16px;
+  padding: 16px 20px;
+  max-width: 360px;
+  width: 100%;
+  margin: 0 auto 24px;
+}
+.meter-label {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 0.85rem;
+  color: var(--gold);
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+}
+.meter-bar-wrap {
+  background: rgba(255,255,255,0.08);
+  border-radius: 50px;
+  height: 14px;
+  overflow: hidden;
+  position: relative;
+}
+.meter-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--deep-red), var(--crimson), var(--gold));
+  border-radius: 50px;
+  width: 0%;
+  animation: meterFill 2s 0.5s ease forwards;
+}
+@keyframes meterFill { to { width: 100%; } }
+.meter-emoji {
+  font-size: 1.8rem;
+  margin-top: 8px;
+  animation: meterEmoji 2.5s 0.5s ease forwards;
+  opacity: 0;
+  display: block;
+}
+@keyframes meterEmoji {
+  0%   { opacity: 0; transform: scale(0); }
+  80%  { opacity: 1; transform: scale(1.3); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* ===== CARD (general) ===== */
+.card {
+  background: linear-gradient(145deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02));
+  border: 1px solid rgba(255,215,0,0.15);
+  border-radius: 24px;
+  padding: 32px 26px;
+  max-width: 420px;
+  width: 100%;
+  position: relative;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 30px 80px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.08);
+  animation: cardIn 0.6s cubic-bezier(0.34,1.56,0.64,1);
+}
+@keyframes cardIn {
+  from { transform: scale(0.6) translateY(40px); opacity: 0; }
+  to   { transform: scale(1) translateY(0); opacity: 1; }
+}
+.card-corner {
+  position: absolute;
+  width: 30px; height: 30px;
+  border-color: var(--gold);
+  border-style: solid;
+  opacity: 0.4;
+}
+.cc-tl { top: 12px; left: 12px; border-width: 2px 0 0 2px; border-radius: 6px 0 0 0; }
+.cc-tr { top: 12px; right: 12px; border-width: 2px 2px 0 0; border-radius: 0 6px 0 0; }
+.cc-bl { bottom: 12px; left: 12px; border-width: 0 0 2px 2px; border-radius: 0 0 0 6px; }
+.cc-br { bottom: 12px; right: 12px; border-width: 0 2px 2px 0; border-radius: 0 0 6px 0; }
+
+/* ===== BUTTONS ===== */
+.btn {
+  display: inline-block;
+  padding: 14px 32px;
+  border-radius: 6px;
+  border: none;
+  font-family: 'Bebas Neue', cursive;
+  font-size: 1.15rem;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: all 0.2s;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  user-select: none;
+  position: relative;
+  overflow: hidden;
+}
+.btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.15);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.btn:active::after { opacity: 1; }
+.btn-gold {
+  background: linear-gradient(135deg, var(--gold), var(--gold2));
+  color: var(--dark);
+  box-shadow: 0 6px 24px rgba(255,215,0,0.4);
+}
+.btn-gold:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(255,215,0,0.5); }
+.btn-red {
+  background: linear-gradient(135deg, var(--red), var(--deep-red));
+  color: white;
+  box-shadow: 0 6px 24px rgba(192,57,43,0.4);
+}
+.btn-outline-gold {
+  background: transparent;
+  color: var(--gold);
+  border: 1.5px solid var(--gold);
+}
+.btn-outline-gold:hover { background: rgba(255,215,0,0.1); }
+
+/* ===== TYPOGRAPHY ===== */
+.section-title {
+  font-family: 'Bebas Neue', cursive;
+  font-size: clamp(2rem, 8vw, 3.2rem);
+  letter-spacing: 2px;
+  color: white;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.gold-text { color: var(--gold); }
+.red-text  { color: var(--crimson); }
+.light-text { color: rgba(255,255,255,0.7); font-size: 0.9rem; line-height: 1.6; }
+
+.quote-box {
+  background: rgba(255,215,0,0.05);
+  border-left: 3px solid var(--gold);
+  border-radius: 0 12px 12px 0;
+  padding: 14px 18px;
+  margin: 12px 0;
+  text-align: left;
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: clamp(0.95rem, 3.5vw, 1.15rem);
+  color: rgba(255,255,255,0.85);
+  line-height: 1.7;
+}
+.quote-box.roast {
+  border-left-color: var(--crimson);
+  background: rgba(255,23,68,0.05);
+  font-style: normal;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+}
+
+/* ===== DIVIDER ===== */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 16px 0;
+  opacity: 0.4;
+}
+.divider::before, .divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.divider span { font-size: 1rem; color: var(--gold); }
+
+/* ===== JOMBLO FACTS ===== */
+.fact-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+  padding: 14px 16px;
+  margin: 10px 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  text-align: left;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+.fact-card:hover, .fact-card:active {
+  border-color: rgba(255,215,0,0.3);
+  background: rgba(255,215,0,0.05);
+  transform: translateX(4px);
+}
+.fact-num {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 1.8rem;
+  color: var(--gold);
+  line-height: 1;
+  min-width: 36px;
+}
+.fact-text {
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.75);
+  line-height: 1.5;
+}
+.fact-text strong { color: var(--crimson); }
+
+/* ===== LOVE METER GAME ===== */
+.meter-game-wrap {
+  position: relative;
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 16px;
+}
+.big-q {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.1rem, 4vw, 1.35rem);
+  color: white;
+  line-height: 1.5;
+  margin-bottom: 6px;
+}
+.answers-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  width: 100%;
+}
+.ans-btn {
+  padding: 13px 10px;
+  border-radius: 10px;
+  border: 1.5px solid rgba(255,215,0,0.2);
+  background: rgba(255,255,255,0.04);
+  color: rgba(255,255,255,0.85);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 600;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: all 0.18s;
+  -webkit-tap-highlight-color: transparent;
+  line-height: 1.3;
+}
+.ans-btn:active { background: rgba(255,215,0,0.1); border-color: var(--gold); transform: scale(0.96); }
+.ans-btn.correct { background: rgba(255,215,0,0.15); border-color: var(--gold); color: var(--gold); }
+.ans-btn.wrong   { background: rgba(255,23,68,0.15); border-color: var(--crimson); color: var(--crimson); }
+
+.feedback-box {
+  display: none;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  line-height: 1.4;
+  width: 100%;
+  text-align: left;
+}
+.feedback-box.show { display: block; animation: fadeInUp 0.3s ease; }
+.feedback-box.ok  { background: rgba(255,215,0,0.1); color: var(--gold); border: 1px solid rgba(255,215,0,0.3); }
+.feedback-box.bad { background: rgba(255,23,68,0.1); color: var(--crimson); border: 1px solid rgba(255,23,68,0.3); }
+
+@keyframes fadeInUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+
+/* ===== SCORE ===== */
+.score-big {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 5rem;
+  background: linear-gradient(135deg, var(--gold), var(--crimson));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+  animation: scorePop 0.5s cubic-bezier(0.34,1.56,0.64,1);
+}
+@keyframes scorePop { from { transform: scale(0); } to { transform: scale(1); } }
+
+/* ===== PROGRESS ===== */
+.prog-wrap { width: 100%; background: rgba(255,255,255,0.08); border-radius: 50px; height: 6px; margin-bottom: 20px; overflow: hidden; }
+.prog-fill  { height: 100%; background: linear-gradient(90deg, var(--deep-red), var(--gold)); border-radius: 50px; transition: width 0.5s ease; }
+.prog-label { font-size: 0.72rem; color: rgba(255,255,255,0.35); letter-spacing: 1px; margin-bottom: 6px; font-family: 'Bebas Neue'; }
+
+/* ===== FINAL ===== */
+#screen6 {
+  background: radial-gradient(ellipse at 50% 50%, #2D0010 0%, var(--dark) 70%);
+}
+.final-big {
+  font-family: 'Bebas Neue', cursive;
+  font-size: clamp(2.5rem, 10vw, 5rem);
+  line-height: 0.95;
+  letter-spacing: 2px;
+  background: linear-gradient(135deg, var(--gold), var(--gold2), var(--crimson));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: titleGlow 2s infinite alternate;
+  margin-bottom: 8px;
+}
+.trophy {
+  font-size: 5rem;
+  animation: trophySpin 3s ease-in-out infinite;
+  display: block;
+  filter: drop-shadow(0 0 20px rgba(255,215,0,0.6));
+}
+@keyframes trophySpin {
+  0%,100% { transform: rotate(-5deg) scale(1); }
+  50%      { transform: rotate(5deg) scale(1.1); }
+}
+
+/* ===== CONFETTI ===== */
+.confetti-piece {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  animation: confettiFall linear forwards;
+}
+@keyframes confettiFall {
+  0%   { transform: translateY(-10px) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+}
+
+/* SPARKLE */
+.sparkle { position: fixed; pointer-events: none; z-index: 9999; animation: sparkAnim 0.6s ease forwards; font-size: 1.2rem; }
+@keyframes sparkAnim { 0%{transform:scale(0);opacity:1;} 60%{transform:scale(1.5);opacity:1;} 100%{transform:scale(0);opacity:0;} }
+
+/* NO BUTTON */
+#btnNo2 {
+  position: fixed; z-index: 9999;
+  background: linear-gradient(135deg, #555, #333);
+  color: rgba(255,255,255,0.8);
+  padding: 12px 24px;
+  font-size: 0.85rem;
+  font-family: 'Bebas Neue', cursive;
+  letter-spacing: 1px;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+  white-space: nowrap;
+  -webkit-tap-highlight-color: transparent;
+  display: none;
+  transition: opacity 0.3s;
+}
+
+/* RIBBON */
+.ribbon {
+  position: absolute;
+  top: -1px; right: 20px;
+  background: linear-gradient(135deg, var(--crimson), var(--deep-red));
+  color: white;
+  font-family: 'Bebas Neue', cursive;
+  font-size: 0.75rem;
+  letter-spacing: 1.5px;
+  padding: 6px 14px 10px;
+  clip-path: polygon(0 0, 100% 0, 100% 80%, 50% 100%, 0 80%);
+}
+
+/* STICKER NAYLON */
+.stk-naylon {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: linear-gradient(135deg, rgba(255,215,0,0.1), rgba(255,215,0,0.05));
+  border: 1.5px solid rgba(255,215,0,0.35);
+  border-radius: 50px;
+  padding: 7px 16px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--gold);
+  margin: 4px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: all 0.15s;
+  font-family: 'DM Sans', sans-serif;
+}
+.stk-naylon:active { transform: scale(0.9); background: rgba(255,215,0,0.15); }
+.stk-pack {
+  border: 1px dashed rgba(255,215,0,0.25);
+  border-radius: 16px;
+  padding: 16px 12px 12px;
+  margin: 14px 0;
+  position: relative;
+}
+.stk-pack::before {
+  content: '🏆 PENGHARGAAN KHUSUS';
+  position: absolute; top: -12px; left: 50%;
+  transform: translateX(-50%);
+  background: var(--gold); color: var(--dark);
+  font-size: 0.65rem; font-weight: 800;
+  padding: 2px 12px; border-radius: 20px;
+  white-space: nowrap; letter-spacing: 1px;
+  font-family: 'DM Sans', sans-serif;
+}
+.stk-row { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; margin: 8px 0; }
+
+@media (max-width: 480px) {
+  .card { padding: 26px 18px; border-radius: 20px; }
+  .answers-grid { gap: 8px; }
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-trail" id="cursorTrail"></div>
+<canvas id="particleCanvas"></canvas>
+
+<button id="btnNo2" onclick="runAway2()">BUKAN JOMBLO 😤</button>
+
+<!-- ================================================================
+     SCREEN 1 — INTRO EPIC
+     ================================================================ -->
+<div class="screen active" id="screen1">
+
+  <div class="crown-badge">👑 SERTIFIKAT RESMI 👑</div>
+
+  <div class="big-title">
+    <span class="glitch" data-text="HAPPY">HAPPY</span><br>
+    <span class="glitch" data-text="VALENTINE">VALENTINE</span>
+  </div>
+
+  <p class="subtitle-intro" style="margin-top:10px">
+    Kepada yang terhormat,<br>
+    <span style="font-size:1.3em">Daniel Harley</span><br>
+    <span style="color:var(--crimson);font-size:0.85rem">— Pejuang Cinta Tanpa Lawan Tanding —</span>
+  </p>
+
+  <!-- Jomblo meter -->
+  <div class="jomblo-meter">
+    <div class="meter-label">📊 KADAR JOMBLO HARI INI</div>
+    <div class="meter-bar-wrap">
+      <div class="meter-bar"></div>
+    </div>
+    <span class="meter-emoji">💀 OVER 9000%</span>
+  </div>
+
+  <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+    <button class="btn btn-gold" onclick="goTo(2);playSound('fanfare')">
+      TERIMA PENGHARGAAN 🏆
+    </button>
+  </div>
+
+  <p style="color:rgba(255,255,255,0.2);font-size:0.7rem;margin-top:20px;letter-spacing:1px">
+    WEBSITE INI BERSERTIFIKAT ISO 9001 ANTI-JOMBLO (YANG TIDAK BERHASIL)
+  </p>
+</div>
+
+
+<!-- ================================================================
+     SCREEN 2 — SERTIFIKAT JOMBLO
+     ================================================================ -->
+<div class="screen" id="screen2">
+  <div class="card">
+    <div class="card-corner cc-tl"></div>
+    <div class="card-corner cc-tr"></div>
+    <div class="card-corner cc-bl"></div>
+    <div class="card-corner cc-br"></div>
+    <div class="ribbon">OFFICIAL</div>
+
+    <div style="font-size:3.5rem;margin-bottom:4px;filter:drop-shadow(0 0 15px rgba(255,215,0,0.5))">🏆</div>
+    <div class="section-title"><span class="gold-text">SERTIFIKAT</span></div>
+    <div style="font-family:'Playfair Display',serif;font-size:0.8rem;color:rgba(255,255,255,0.4);letter-spacing:3px;margin-bottom:16px">PENGHARGAAN INTERNASIONAL</div>
+
+    <div class="quote-box">
+      "Dengan bangga kami mempersembahkan penghargaan tertinggi kepada
+      <strong style="color:var(--gold)">Daniel Harley</strong>
+      atas dedikasi luar biasa dalam mempertahankan status
+      <em style="color:var(--crimson)">jomblo premium</em>
+      melewati hari Valentine ke-sekian kalinya dengan penuh kehormatan."
+    </div>
+
+    <div class="divider"><span>✦</span></div>
+
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <div class="fact-card" onclick="playSound('pop');this.style.borderColor='gold'">
+        <div class="fact-num">01</div>
+        <div class="fact-text">Berhasil survive sendirian di hari yang paling <strong>memuakkan bagi jomblo</strong> sepanjang tahun 💔</div>
+      </div>
+      <div class="fact-card" onclick="playSound('pop');this.style.borderColor='gold'">
+        <div class="fact-num">02</div>
+        <div class="fact-text">Tidak terpengaruh <strong>promosi coklat</strong> dan bunga karena tidak ada yang mau diajak belanja 🌹</div>
+      </div>
+      <div class="fact-card" onclick="playSound('pop');this.style.borderColor='gold'">
+        <div class="fact-num">03</div>
+        <div class="fact-text">Menyelesaikan <strong>22+ jam scrolling Instagram</strong> melihat pasangan orang tanpa mental breakdown (mungkin)</div>
+      </div>
+    </div>
+
+    <div class="divider"><span>✦</span></div>
+
+    <button class="btn btn-gold" onclick="goTo(3);playSound('fanfare')">
+      LANJUT KE SIDANG 📋
+    </button>
+  </div>
+</div>
+
+
+<!-- ================================================================
+     SCREEN 3 — SIDANG / PERTANYAAN NGESELIN
+     ================================================================ -->
+<div class="screen" id="screen3">
+  <div class="card">
+    <div class="card-corner cc-tl"></div>
+    <div class="card-corner cc-tr"></div>
+    <div class="card-corner cc-bl"></div>
+    <div class="card-corner cc-br"></div>
+
+    <div style="display:flex;align-items:center;gap:8px;justify-content:center;margin-bottom:6px">
+      <div style="font-size:1.8rem">⚖️</div>
+      <div>
+        <div class="section-title" style="font-size:1.6rem">SIDANG JOMBLO</div>
+        <div style="font-size:0.7rem;color:rgba(255,255,255,0.35);letter-spacing:2px">MAHKAMAH AGUNG PERCINTAAN</div>
+      </div>
+    </div>
+
+    <div class="prog-label" id="progLabel2">KASUS 1 DARI 6</div>
+    <div class="prog-wrap"><div class="prog-fill" id="progFill2" style="width:0%"></div></div>
+
+    <div style="background:rgba(255,23,68,0.06);border:1px solid rgba(255,23,68,0.15);border-radius:10px;padding:8px 12px;margin-bottom:14px;font-size:0.75rem;color:rgba(255,255,255,0.4);letter-spacing:1px">
+      ⚠️ SEMUA JAWABAN AKAN DIGUNAKAN SEBAGAI BAHAN BULLY TEMAN-TEMAN
+    </div>
+
+    <div class="big-q" id="bigQ2">Loading...</div>
+    <div class="answers-grid" id="ansGrid2"></div>
+    <div class="feedback-box" id="feedbackBox2"></div>
+
+    <div id="nextWrap2" style="margin-top:14px;display:none">
+      <button class="btn btn-gold" onclick="nextQ2()">LANJUT SIDANG ➜</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ================================================================
+     SCREEN 4 — VONIS
+     ================================================================ -->
+<div class="screen" id="screen4">
+  <div class="card">
+    <div class="card-corner cc-tl"></div>
+    <div class="card-corner cc-tr"></div>
+    <div class="card-corner cc-bl"></div>
+    <div class="card-corner cc-br"></div>
+
+    <div style="font-size:2.5rem;margin-bottom:8px">⚖️</div>
+    <div class="section-title">VONIS <span class="gold-text">RESMI</span></div>
+    <div style="font-size:0.7rem;color:rgba(255,255,255,0.3);letter-spacing:2px;margin-bottom:20px">MAHKAMAH AGUNG PERCINTAAN</div>
+
+    <div style="display:flex;align-items:flex-end;justify-content:center;gap:8px;margin-bottom:4px">
+      <div class="score-big" id="scoreDisplay2">0</div>
+      <div style="color:rgba(255,255,255,0.3);font-family:'Bebas Neue';font-size:2rem;padding-bottom:8px">/ 6</div>
+    </div>
+    <div style="color:rgba(255,255,255,0.4);font-size:0.75rem;letter-spacing:2px;margin-bottom:16px">JAWABAN BENAR</div>
+
+    <div class="quote-box roast" id="verdictText" style="font-size:0.95rem;color:rgba(255,255,255,0.8)">
+      Loading verdict...
+    </div>
+
+    <div class="stk-pack" id="stickerPack2">
+      <div class="stk-row" id="stickerRow2"></div>
+    </div>
+
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:16px">
+      <button class="btn btn-outline-gold" onclick="restartGame2()">BANDING 🔄</button>
+      <button class="btn btn-gold" onclick="goTo(5);playSound('fanfare')">TERIMA VONIS 📜</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ================================================================
+     SCREEN 5 — PESAN DARI TEMAN
+     ================================================================ -->
+<div class="screen" id="screen5">
+  <div class="card">
+    <div class="card-corner cc-tl"></div>
+    <div class="card-corner cc-tr"></div>
+    <div class="card-corner cc-bl"></div>
+    <div class="card-corner cc-br"></div>
+
+    <div style="font-size:2.8rem;margin-bottom:6px;filter:drop-shadow(0 0 10px rgba(255,23,68,0.5))">💌</div>
+    <div class="section-title">PESAN <span class="red-text">DARI</span> TEMAN</div>
+    <div style="font-size:0.72rem;color:rgba(255,255,255,0.3);letter-spacing:2px;margin-bottom:18px">YANG PEDULI (KATANYA)</div>
+
+    <div class="quote-box" style="margin-bottom:10px">
+      "Dan, sebenernya gue nulis ini bukan buat ngatain lu.<br><br>
+      Oke bohong, sebagian buat ngatain. Tapi sebagian lagi beneran bilang —
+      lu itu orang yang luar biasa, cuma mungkin <span style='color:var(--gold)'>rejekinya lagi belum dateng aja</span>. 
+      Atau mungkin doi yang belum layak. Gatau deh 🤷"
+    </div>
+    <div class="quote-box roast" style="margin-bottom:10px">
+      "Tapi serius, Happy Valentine's Day ya Dan. Semoga tahun depan lo udah 
+      ga jomblo dan ga ada lagi website kayak gini yang dikirim ke lo 😂
+      (kalau masih jomblo, gue bikin yang lebih elaborate)"
+    </div>
+    <div class="quote-box" style="border-left-color:var(--gold);background:rgba(255,215,0,0.04)">
+      "Intinya: lu dikelilingi orang-orang yang <span style='color:var(--gold)'>peduli sama lu</span>,
+      even kalo cara nunjukinnya dengan cara ngisengin lu kayak gini. 
+      Itu juga bentuk cinta kan? 🔥<br><br>
+      — Dari sahabat yang paling baik (versi dia sendiri)"
+    </div>
+
+    <!-- The big question -->
+    <div style="margin:16px 0;padding:16px;background:rgba(255,23,68,0.06);border:1px solid rgba(255,23,68,0.2);border-radius:14px">
+      <div class="big-q" style="font-size:1.05rem;margin-bottom:14px">
+        Oke final question —<br>
+        Lo jomblo karena pilihan atau karena <span style="color:var(--crimson)">keadaan</span>? 😏
+      </div>
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+        <button class="btn btn-gold" onclick="sayPilihan()" style="font-size:0.9rem;padding:12px 22px">
+          PILIHAN 💪
+        </button>
+        <button class="btn btn-red" id="btnKeadaan" onclick="runAway2()" style="font-size:0.9rem;padding:12px 22px">
+          KEADAAN 😭
+        </button>
+      </div>
+      <p id="noCount2Wrap" style="font-size:0.7rem;color:rgba(255,255,255,0.2);margin-top:8px">
+        tombol "keadaan" kabur <span id="noCount2">0</span>x
+      </p>
+    </div>
+
+    <div id="finalMsgWrap" style="display:none">
+      <div class="divider"><span>✦</span></div>
+      <button class="btn btn-gold" onclick="goTo(6);playSound('fanfare')" style="width:100%">
+        LIHAT PENGHARGAAN FINAL 🏆
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ================================================================
+     SCREEN 6 — GRAND FINALE
+     ================================================================ -->
+<div class="screen" id="screen6">
+
+  <span class="trophy">🏆</span>
+
+  <div class="final-big" style="margin-top:10px">
+    DANIEL<br>HARLEY
+  </div>
+  <div style="font-family:'Playfair Display',serif;font-style:italic;color:rgba(255,255,255,0.5);font-size:0.95rem;margin:4px 0 20px">
+    — Legenda Jomblo Terkuat —
+  </div>
+
+  <div class="card" style="max-width:400px">
+    <div class="card-corner cc-tl"></div>
+    <div class="card-corner cc-tr"></div>
+    <div class="card-corner cc-bl"></div>
+    <div class="card-corner cc-br"></div>
+
+    <div class="quote-box" style="margin-bottom:12px">
+      "Happy Valentine's Day, Daniel Harley.<br><br>
+      Lu mungkin jomblo hari ini, tapi lu punya sesuatu yang banyak orang 
+      berpasangan ga punya — <span style='color:var(--gold)'>kebebasan penuh</span> dan 
+      <span style='color:var(--gold)'>teman-teman yang cukup peduli buat bikin website ngeselin ini.</span>"
+    </div>
+    <div class="quote-box roast">
+      "Semoga Valentine ini jadi yang terakhir di status jomblo lu.
+      Tapi kalau engga, we got you. Always. 🔥<br><br>
+      (Dan next year gue bikin yang lebih brutal)"
+    </div>
+
+    <div class="stk-pack" style="margin-top:16px">
+      <div class="stk-row">
+        <span class="stk-naylon" onclick="playSound('pop')">👑 Jomblo Premium</span>
+        <span class="stk-naylon" onclick="playSound('pop')">🏆 MVP Valentine</span>
+        <span class="stk-naylon" onclick="playSound('pop')">💪 Survivor</span>
+        <span class="stk-naylon" onclick="playSound('pop')">🔥 Legend</span>
+        <span class="stk-naylon" onclick="playSound('pop')">⚡ Stay Single</span>
+        <span class="stk-naylon" onclick="playSound('pop')">🎖️ Elite Jomblo</span>
+        <span class="stk-naylon" onclick="playSound('pop')">💎 No GF No Cry</span>
+        <span class="stk-naylon" onclick="playSound('pop')">🚀 Free Man</span>
+      </div>
+    </div>
+
+    <div style="margin-top:18px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+      <button class="btn btn-outline-gold" onclick="goTo(1)">DARI AWAL 🔄</button>
+      <button class="btn btn-gold" onclick="epicConfetti();playSound('fanfare')">🎆 CELEBRATE!</button>
+    </div>
+  </div>
+
+  <p style="color:rgba(255,255,255,0.15);font-size:0.65rem;margin-top:24px;letter-spacing:1px">
+    © 2025 MAHKAMAH AGUNG PERCINTAAN · ALL RIGHTS RESERVED · MADE WITH 💔
+  </p>
+</div>
+
+
+<!-- ================================================================
+     JAVASCRIPT
+     ================================================================ -->
+<script>
+// ====== CURSOR ======
+const cur = document.getElementById('cursor');
+const trail = document.getElementById('cursorTrail');
+let mx=0, my=0;
+document.addEventListener('mousemove', e => {
+  mx=e.clientX; my=e.clientY;
+  cur.style.left=mx+'px'; cur.style.top=my+'px';
+  setTimeout(()=>{ trail.style.left=mx+'px'; trail.style.top=my+'px'; }, 80);
+});
+document.addEventListener('click', e => {
+  spk(e.clientX, e.clientY, 3);
+});
+
+// ====== PARTICLES ======
+const canvas = document.getElementById('particleCanvas');
+const ctx2d = canvas.getContext('2d');
+let particles = [];
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+class Particle {
+  constructor() { this.reset(); }
+  reset() {
+    this.x = Math.random() * canvas.width;
+    this.y = Math.random() * canvas.height;
+    this.size = Math.random() * 2.5 + 0.5;
+    this.speedY = -(Math.random() * 0.8 + 0.2);
+    this.speedX = (Math.random() - 0.5) * 0.4;
+    this.opacity = Math.random() * 0.5 + 0.1;
+    this.color = Math.random() > 0.5 ? '#FFD700' : '#FF1744';
+    this.shape = Math.random() > 0.7 ? '♥' : '•';
+  }
+  update() {
+    this.y += this.speedY; this.x += this.speedX;
+    if (this.y < -10) this.reset(); this.y = canvas.height;
+  }
+  draw() {
+    ctx2d.save();
+    ctx2d.globalAlpha = this.opacity;
+    ctx2d.fillStyle = this.color;
+    ctx2d.font = this.shape === '♥' ? `${this.size*6}px serif` : `${this.size*3}px serif`;
+    ctx2d.fillText(this.shape, this.x, this.y);
+    ctx2d.restore();
+  }
+}
+for (let i = 0; i < 60; i++) particles.push(new Particle());
+function animParticles() {
+  ctx2d.clearRect(0, 0, canvas.width, canvas.height);
+  particles.forEach(p => { p.update(); p.draw(); });
+  requestAnimationFrame(animParticles);
+}
+animParticles();
+
+// ====== AUDIO ======
+let actx;
+function initAudio(){if(!actx)actx=new(window.AudioContext||window.webkitAudioContext)();}
+function playSound(type){
+  try{
+    initAudio();if(actx.state==='suspended')actx.resume();
+    const t=actx.currentTime;
+    const o=(f,tp,dur,vol,d=0)=>{
+      const os=actx.createOscillator(),g=actx.createGain();
+      os.connect(g);g.connect(actx.destination);os.type=tp;
+      os.frequency.setValueAtTime(f,t+d);g.gain.setValueAtTime(vol,t+d);
+      g.gain.exponentialRampToValueAtTime(0.001,t+d+dur);os.start(t+d);os.stop(t+d+dur);
+    };
+    if(type==='pop'){o(700,'sine',.12,.3);o(1100,'sine',.08,.18,.05);}
+    if(type==='fanfare'){[392,523,659,784,1047].forEach((f,i)=>o(f,'triangle',.35,.28,i*.08));}
+    if(type==='correct'){o(523,'sine',.18,.28);o(784,'sine',.25,.28,.14);}
+    if(type==='wrong'){o(250,'sawtooth',.2,.3);o(180,'sawtooth',.2,.25,.15);}
+    if(type==='run'){o(150,'square',.07,.2);o(100,'square',.05,.15,.07);}
+    if(type==='epic'){[262,330,392,523,659,784,1047,1318].forEach((f,i)=>o(f,'sine',.4,.22,i*.06));}
+  }catch(e){}
+}
+document.addEventListener('touchstart',()=>{try{initAudio();}catch(e){}},{passive:true,once:true});
+document.addEventListener('click',()=>{try{initAudio();}catch(e){}},{once:true});
+
+// ====== SCREENS ======
+function goTo(n){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('screen'+n).classList.add('active');
+  window.scrollTo(0,0);
+  if(n===3){if(!q2active.length)shuffleQ2();loadQ2();}
+  if(n===5)showBtn2();
+  else hideBtn2();
+  if(n===6){setTimeout(epicConfetti,400);setTimeout(()=>playSound('epic'),200);}
+}
+
+// ====== SPARKLES ======
+function spk(x, y, n=4){
+  const e=['✦','★','♥','◆','⚡','♦'];
+  for(let i=0;i<n;i++){
+    const sp=document.createElement('span');sp.className='sparkle';
+    sp.textContent=e[Math.floor(Math.random()*e.length)];
+    sp.style.left=(x+(Math.random()-.5)*70)+'px';
+    sp.style.top=(y+(Math.random()-.5)*70)+'px';
+    sp.style.color=Math.random()>.5?'#FFD700':'#FF1744';
+    sp.style.animationDelay=(i*.07)+'s';
+    document.body.appendChild(sp);setTimeout(()=>sp.remove(),800);
+  }
+}
+
+// ====== QUESTIONS ======
+const questions2 = [
+  {
+    q: 'Seberapa lama udah jomblo, Dan?',
+    answers: ['Baru 1-2 bulan','Lumayan lama sih','Udah lupa kapan terakhir pacaran 😶','Lahir sampai sekarang'],
+    correct: 2,
+    ok: '💀 KLASIK. Tapi setidaknya konsisten!',
+    bad: 'Wkwkwk BOHONG. Kita semua tau jawabannya.'
+  },
+  {
+    q: 'Di hari Valentine ini, rencana kamu ngapain?',
+    answers: ['Nonton drama romantis sambil nangis','Order makanan sendiri + makan sendiri 🍜','Stalking mantan di Instagram','Semua di atas secara bersamaan'],
+    correct: 3,
+    ok: 'HAHAHAHA jujur banget 💀 Respect!',
+    bad: 'Yakin cuma itu? Kayaknya ada yang kelewat...'
+  },
+  {
+    q: 'Kalau ada yang nembak kamu hari ini, reaksi kamu?',
+    answers: ['Pura-pura ga denger','Langsung iya dong, siapapun itu 😭','Mikir dua hari dulu','Nanya dulu: "lu serius?"'],
+    correct: 1,
+    ok: '😭😭 RELATABLE BANGET. Jangan ditiru ya bestie!',
+    bad: 'Hmm... keliatannya lo ada standar. Respect tapi juga kasian.'
+  },
+  {
+    q: 'Kata yang paling tepat buat nggambarain status Valentine kamu?',
+    answers: ['Bebas & merdeka 💪','Tragis tapi bermartabat','Lagi dalam proses','Single by choice (katanya)'],
+    correct: 3,
+    ok: '😂 "KATANYA" itu yang bikin ngakak. Jujur banget lu!',
+    bad: 'Bebas & merdeka... YA KALI kita lihat muka lo tadi 😂'
+  },
+  {
+    q: 'Seberapa sering scroll couple content di sosmed hari ini?',
+    answers: ['Ga pernah, alergi','3-5 kali aja','Ga kehitung, udah blur semua','Uninstall semua app sekalian'],
+    correct: 2,
+    ok: '🫡 Survivorship yang luar biasa. Salut, Dan.',
+    bad: 'Hmmm... yakin? Terus kenapa mata lo merah?'
+  },
+  {
+    q: 'Kalau jomblo adalah profesi, title kamu apa?',
+    answers: ['Junior Jomblo (masih bisa improve)','Senior Jomblo (berpengalaman)','Principal Jomblo (level legendaris)','CEO of Being Single'],
+    correct: 3,
+    ok: '👑 CEO VIBES!! Ini sertifikat tertinggi dalam dunia perjombloan.',
+    bad: 'Kurang ambisius kamu, Dan. Aim higher! CEO itu!'
+  },
+];
+let q2active=[], cQ2=0, sc2=0, ans2=false;
+function shuffleQ2(){
+  q2active=[...questions2].sort(()=>Math.random()-.5);
+}
+function loadQ2(){
+  ans2=false;
+  const q=q2active[cQ2];
+  document.getElementById('bigQ2').textContent=q.q;
+  document.getElementById('progLabel2').textContent=`KASUS ${cQ2+1} DARI ${q2active.length}`;
+  document.getElementById('progFill2').style.width=((cQ2/q2active.length)*100)+'%';
+  const grid=document.getElementById('ansGrid2');grid.innerHTML='';
+  const idx=[0,1,2,3].sort(()=>Math.random()-.5);
+  let nc=0;
+  idx.forEach((orig,ni)=>{
+    const b=document.createElement('button');b.className='ans-btn';
+    b.textContent=q.answers[orig];
+    if(orig===q.correct)nc=ni;
+    grid.appendChild(b);
+  });
+  const btns=grid.querySelectorAll('.ans-btn');
+  btns.forEach((b,i)=>b.onclick=()=>pickAns2(i,nc,q,b));
+  const fb=document.getElementById('feedbackBox2');fb.className='feedback-box';fb.textContent='';
+  document.getElementById('nextWrap2').style.display='none';
+}
+function pickAns2(chosen,correct,q,btn){
+  if(ans2)return;ans2=true;
+  document.querySelectorAll('.ans-btn').forEach(b=>b.style.pointerEvents='none');
+  const fb=document.getElementById('feedbackBox2');
+  if(chosen===correct){
+    sc2++;btn.classList.add('correct');
+    fb.textContent='✅ '+q.ok;fb.className='feedback-box ok show';
+    playSound('correct');spk(btn.getBoundingClientRect().left+50, btn.getBoundingClientRect().top+20, 5);
+  } else {
+    btn.classList.add('wrong');
+    document.querySelectorAll('.ans-btn')[correct].classList.add('correct');
+    fb.textContent='💀 '+q.bad;fb.className='feedback-box bad show';
+    playSound('wrong');
+  }
+  document.getElementById('nextWrap2').style.display='block';
+}
+function nextQ2(){
+  cQ2++;
+  if(cQ2>=q2active.length)showVerdict();
+  else{loadQ2();playSound('pop');}
+}
+function showVerdict(){
+  goTo(4);
+  document.getElementById('scoreDisplay2').textContent=sc2;
+  const verdicts=[
+    [0,1,'Tingkat kejujuran: SANGAT TINGGI (atau nasib lo emang kayak gini). Tapi respect atas keberanian jawab jujur. Sidang ditutup dengan penuh iba. 💀'],
+    [2,3,'Lumayan jujur, lumayan bohong. Seperti status percintaan lo — ambigu dan tidak jelas. Hakim bingung mau kasih vonis apa. 🤨'],
+    [4,5,'Jawaban yang cukup akurat! Artinya lo self-aware tentang kondisi lo. Itu langkah pertama menuju perubahan... atau penerimaan. 😭'],
+    [6,6,'JAWAB SEMUA BENER?! Artinya lo sangat mengenal diri sendiri sebagai jomblo. Ini bukan pencapaian yang harusnya dibanggain tapi ok fine, SELAMAT. 👑💀'],
+  ];
+  let txt='';
+  for(const[mn,mx,t]of verdicts){if(sc2>=mn&&sc2<=mx){txt=t;break;}}
+  document.getElementById('verdictText').textContent=txt;
+  const awards=['💀','🏆','👑','🎖️','⭐','🔥'];
+  const wrap=document.getElementById('stickerRow2');wrap.innerHTML='';
+  for(let i=0;i<Math.max(1,sc2+1);i++){
+    const sp=document.createElement('span');sp.className='stk-naylon';
+    sp.textContent=awards[i%awards.length]+' Poin '+i;
+    sp.onclick=()=>{playSound('pop');sp.style.transform='scale(1.2)';setTimeout(()=>sp.style.transform='',300);};
+    wrap.appendChild(sp);
+  }
+  if(sc2>=5){setTimeout(epicConfetti,300);playSound('epic');}
+}
+function restartGame2(){cQ2=0;sc2=0;ans2=false;shuffleQ2();goTo(3);playSound('pop');}
+
+// ====== NO BUTTON 2 (screen 5) ======
+let nc2=0;
+const taunts2=['KABUR 😤','GA MAU 🙅','NGGAK DEH','YA KALI...','JANGAN DITEKAN','LOL NO','SKIP','...'];
+function showBtn2(){
+  const btn=document.getElementById('btnNo2');
+  btn.style.display='block';
+  positionBtn2(true);nc2=0;
+  btn.textContent='KEADAAN 😭';
+  btn.style.transform='scale(1)';btn.style.opacity='1';
+}
+function hideBtn2(){document.getElementById('btnNo2').style.display='none';}
+function positionBtn2(init){
+  const btn=document.getElementById('btnNo2');
+  const vw=window.innerWidth,vh=window.innerHeight;
+  const bw=btn.offsetWidth||160,bh=btn.offsetHeight||48;
+  const m=14;
+  if(init){
+    // Put near bottom right initially
+    btn.style.left=Math.min(vw-bw-m,vw*0.6)+'px';
+    btn.style.top=Math.min(vh-bh-m,vh*0.65)+'px';
+  } else {
+    const cx=parseFloat(btn.style.left)||vw/2;
+    const cy=parseFloat(btn.style.top)||vh/2;
+    let nx=cx,ny=cy,best=0;
+    for(let i=0;i<30;i++){
+      const tx=m+Math.random()*(vw-bw-m*2);
+      const ty=m+Math.random()*(vh-bh-m*2);
+      const d=Math.hypot(tx-cx,ty-cy);
+      if(d>best){best=d;nx=tx;ny=ty;}
+    }
+    btn.style.transition='left .28s cubic-bezier(0.34,1.56,0.64,1),top .28s cubic-bezier(0.34,1.56,0.64,1)';
+    btn.style.left=nx+'px';btn.style.top=ny+'px';
+  }
+}
+function runAway2(){
+  playSound('run');nc2++;
+  document.getElementById('noCount2').textContent=nc2;
+  const btn=document.getElementById('btnNo2');
+  positionBtn2(false);
+  const sc=Math.max(.4,1-nc2*.06);
+  const op=Math.max(.2,1-nc2*.1);
+  btn.style.transform=`scale(${sc})`;btn.style.opacity=op;
+  if(nc2>=3)btn.textContent=taunts2[Math.min(nc2-1,taunts2.length-1)];
+  if(nc2>=9)btn.style.display='none';
+  spk(parseFloat(btn.style.left)+60, parseFloat(btn.style.top)+20, 3);
+}
+
+function sayPilihan(){
+  playSound('fanfare');
+  epicConfetti();
+  document.getElementById('finalMsgWrap').style.display='block';
+  hideBtn2();
+  // Update the question area
+  const wrap=document.querySelector('#screen5 .meter-game-wrap') || document.querySelector('#screen5 [style*="border-radius:14px"]');
+  document.getElementById('btnKeadaan').style.display='none';
+  document.querySelector('#screen5 .btn-gold').textContent='BETUL!! 💪🔥';
+  document.querySelector('#screen5 .btn-gold').style.background='linear-gradient(135deg,#FFD700,#FFA500)';
+  setTimeout(()=>{
+    document.getElementById('finalMsgWrap').scrollIntoView({behavior:'smooth',block:'center'});
+  },400);
+}
+
+// ====== CONFETTI ======
+function epicConfetti(){
+  const colors=['#FFD700','#FF1744','#FFA500','#FF6B6B','#FFE066','#FF4081','#FFFFFF'];
+  const shapes=['★','♥','✦','◆','●','▲'];
+  for(let i=0;i<100;i++){
+    setTimeout(()=>{
+      const c=document.createElement('div');c.className='confetti-piece';
+      const isShape=Math.random()>.4;
+      if(isShape){
+        c.textContent=shapes[Math.floor(Math.random()*shapes.length)];
+        c.style.cssText=`left:${Math.random()*100}vw;top:-20px;color:${colors[Math.floor(Math.random()*colors.length)]};font-size:${0.8+Math.random()*1.4}rem;animation-duration:${2+Math.random()*2.5}s;animation-delay:${Math.random()*.5}s;background:none;`;
+      } else {
+        c.style.cssText=`left:${Math.random()*100}vw;top:-20px;width:${5+Math.random()*10}px;height:${5+Math.random()*10}px;background:${colors[Math.floor(Math.random()*colors.length)]};border-radius:${Math.random()>.5?'50%':'2px'};animation-duration:${2+Math.random()*2.5}s;animation-delay:${Math.random()*.5}s;`;
+      }
+      document.body.appendChild(c);setTimeout(()=>c.remove(),6000);
+    },i*18);
+  }
+}
+
+window.addEventListener('resize',()=>{
+  resizeCanvas();
+  if(document.getElementById('screen5').classList.contains('active'))positionBtn2(true);
+});
+</script>
+</body>
+</html>
